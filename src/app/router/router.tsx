@@ -1,26 +1,34 @@
 import Loggin from "@/module/auth/Loggin";
 import AuthLayout from "@/layouts/auth-layout/AuthLayout";
 import DashboardLayout from "@/layouts/dashboard-layout/DashboardLayout";
-import Tasks from "@/module/tasks/Tasks";
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "@/module/auth/LandingPage";
+import Analytics from "@/module/analytics/Analytics";
+import { ROUTES } from "./routes";
+import Tasks from "@/module/tasks/Tasks";
+import Profile from "@/module/profile/Profile";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: ROUTES.MAIN,
     element: <AuthLayout />,
     children: [
       { index: true, element: <LandingPage /> },
       {
-        path: "auth",
+        path: ROUTES.Auth,
         element: <Loggin />,
       },
     ],
   },
   {
-    path: "dashboard",
+    path: ROUTES.DASHBOARD,
     element: <DashboardLayout />,
-    children: [{ index: true, element: <Tasks /> }],
+    children: [
+      { index: true, element: <Analytics /> },
+      { path: ROUTES.ANALYTICS, element: <Analytics /> },
+      { path: ROUTES.TASKS, element: <Tasks /> },
+      { path: ROUTES.PROFILE, element: <Profile /> },
+    ],
   },
 ]);
 

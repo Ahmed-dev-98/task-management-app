@@ -5,7 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "@/module/auth/LandingPage";
 import Analytics from "@/module/analytics/Analytics";
 import { ROUTES } from "./routes";
-import Tasks from "@/module/tasks/Tasks";
+import Tasks from "@/module/tasks/Tasks-list";
 import Profile from "@/module/profile/Profile";
 
 const router = createBrowserRouter([

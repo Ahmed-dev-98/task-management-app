@@ -5,12 +5,12 @@ import ModuleContainer from "@/shared/ui/modules-container";
 
 const DashboardLayout = () => {
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-screen w-full ">
       <Sidebar />
 
       <div className="w-full  bg-slate-200 flex flex-col">
         <Navbar />
-        <div className="w-full h-full">
+        <div className="w-full h-[calc(100%-200px)]">
           <ModuleContainer>
             <Outlet />
           </ModuleContainer>

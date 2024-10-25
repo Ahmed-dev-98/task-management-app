@@ -18,6 +18,7 @@ import { CaretSortIcon, EyeNoneIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import TableActions from "@/shared/table/table-actions";
 import { ITask } from "../Tasks-list";
+import { ROUTES } from "@/app/router/routes";
 
 export const columns: ColumnDef<ITask>[] = [
   {
@@ -43,7 +44,11 @@ export const columns: ColumnDef<ITask>[] = [
             rel="noreferrer"
             className="hover:underline hover:text-blue-600 cursor-pointer"
           >
-            {row.original?.image}
+            <img
+              src={row.original?.image}
+              className="w-12 h-12 rounded-md object-cover"
+              alt=""
+            />
           </a>
         </div>
       );
@@ -124,7 +129,7 @@ export const columns: ColumnDef<ITask>[] = [
       <DataTableColumnHeader column={column} title="Actions" />
     ),
     cell: ({ row }) => {
-      return <TableActions id={row.original.id} />;
+      return <TableActions navigator={ROUTES.EDIT_TASK} task={row.original} />;
     },
   },
 ];

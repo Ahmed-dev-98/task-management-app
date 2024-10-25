@@ -11,7 +11,7 @@ const Sidebar = () => {
   const navItems = [
     {
       name: "Analytics",
-      path: ROUTES.ANALYTICS,
+      path: ROUTES.DASHBOARD,
     },
     {
       name: "Tasks",
@@ -29,8 +29,9 @@ const Sidebar = () => {
       </div>
       <div className="bg-teal-800  h-[calc(100vh-200px)] flex flex-col justify-between">
         <ul className="flex flex-col gap-8 bg-red-400 justify-center items-center">
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <Link
+              key={index}
               className={`${
                 location.pathname.includes(item.path)
                   ? "bg-red-600"

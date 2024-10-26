@@ -11,31 +11,43 @@ const Sidebar = () => {
   const navItems = [
     {
       name: "Analytics",
-      path: ROUTES.ANALYTICS,
+      path: ROUTES.DASHBOARD,
+      module: "dashboard",
     },
     {
       name: "Tasks",
       path: ROUTES.TASKS,
+      module: "tasks",
+    },
+    {
+      name: "Employees",
+      path: ROUTES.EMPLOYEES,
+      module: "employees",
     },
     {
       name: "Profile",
       path: ROUTES.PROFILE,
+      module: "profile",
     },
   ];
   return (
-    <div className="w-[25%] bg-gray-400 h-full flex flex-col pt-5 gap-12">
-      <div className="flex justify-center items-center mx-auto bg-red-300 rounded-md w-[90%] h-[200px]">
-        logo
+    <div className="w-[25%] bg-[#eaeaea] h-full flex flex-col pt-5 gap-12">
+      <div className="flex justify-center items-center mx-auto  rounded-md w-[90%] h-[200px] ">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/task-management-7913d.appspot.com/o/images%2Fpng-transparent-software-performance-testing-software-testing-functional-testing-computer-icons-system-testing-performance-angle-logo-performance.png?alt=media&token=f8909e08-6662-4a60-ab69-b9ac10f89149"
+          alt=""
+        />
       </div>
-      <div className="bg-teal-800  h-[calc(100vh-200px)] flex flex-col justify-between">
-        <ul className="flex flex-col gap-8 bg-red-400 justify-center items-center">
-          {navItems.map((item) => (
+      <div className="  h-[calc(100vh-200px)] flex flex-col justify-between">
+        <ul className="flex flex-col gap-8  justify-center items-center">
+          {navItems.map((item, index) => (
             <Link
+              key={index}
               className={`${
-                location.pathname.includes(item.path)
-                  ? "bg-red-600"
-                  : "bg-red-100"
-              }  w-[90%] mx-auto flex justify-center items-center rounded-md py-3 capitalize`}
+                location.pathname.split("dashboard/")[1]?.includes(item.module)
+                  ? "bg-[#294664] text-white"
+                  : "bg-transparent text-[#294664]"
+              }  w-[90%] mx-auto border font-medium border-black flex justify-center items-center rounded-md py-3 capitalize hover:bg-[#294664] hover:text-white`}
               to={item.path}
             >
               {item.name}
@@ -48,13 +60,13 @@ const Sidebar = () => {
               logout();
               navigate(ROUTES.MAIN);
             }}
-            className="bg-red-800 w-[90%] mx-auto flex justify-center items-center rounded-md py-3 capitalize"
+            className="bg-[#294664] w-[90%] mx-auto flex justify-center items-center rounded-md py-3 capitalize"
           >
             logout
           </Button>{" "}
           {/* copyright */}
           <p className="w-full text-center text-sm pb-3">
-            copyright all right reserved @ 2023 for ahmed-dev{" "}
+            copyright right reserved @ 2023 ahmed-dev{" "}
           </p>
         </div>
       </div>

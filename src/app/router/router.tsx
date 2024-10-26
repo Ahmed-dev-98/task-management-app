@@ -9,6 +9,9 @@ import Tasks from "@/module/tasks/Tasks-list";
 import Profile from "@/module/profile/Profile";
 import TaskManager from "@/module/tasks/_components/tasks-crud";
 import TasksLayout from "@/module/tasks/tasks-layout";
+import EmployeesLayout from "@/module/employees/employees-layout";
+import EmployeesList from "@/module/employees/employees-list";
+import EmployeeManager from "@/module/employees/_components/employee-crud";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,15 @@ const router = createBrowserRouter([
           { index: true, element: <Tasks /> },
           { path: "create", element: <TaskManager /> },
           { path: "edit/:id", element: <TaskManager /> },
+        ],
+      },
+      {
+        path: ROUTES.EMPLOYEES,
+        element: <EmployeesLayout />,
+        children: [
+          { index: true, element: <EmployeesList /> },
+          { path: "create", element: <EmployeeManager /> },
+          { path: "edit/:id", element: <EmployeeManager /> },
         ],
       },
       { path: ROUTES.PROFILE, element: <Profile /> },

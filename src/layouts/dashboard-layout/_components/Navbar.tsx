@@ -2,7 +2,7 @@ import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 const Navbar = () => {
   const { getUser, getPermission } = useKindeAuth();
-  const isManager = getPermission("is-manager");
+  const isManager = getPermission && getPermission("is-manager");
 
   return (
     <div className="w-full h-16 bg-[#fffffe] border-b-2  shadow-gray-300 p-2 flex justify-between  items-center">
@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className="flex flex-col ">
           <p className="font-medium text-sm">{getUser()?.given_name}</p>
           <p className="font-medium text-sm">
-            {isManager.isGranted ? "Manager" : "Employee"}
+            {isManager?.isGranted ? "Manager" : "Employee"}
           </p>
         </div>
       </div>

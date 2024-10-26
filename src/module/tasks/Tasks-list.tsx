@@ -6,6 +6,14 @@ import { DataTableViewOptions } from "@/shared/table/coulmn-toggle";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
@@ -22,6 +30,7 @@ import { useAppSelector } from "@/store";
 import { selectTasks } from "@/store/slices/tasks.slice";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { IEmployee } from "@/store/slices/employees.slice";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 export interface ITask {
   id: string;
@@ -36,11 +45,14 @@ export interface ITask {
 const TasksList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const tasks = useAppSelector(selectTasks);
-  const { getUser, getPermission } = useKindeAuth();
+  const [searchState, setSearchState] = useState<
+    "state" | "priority" | "title"
+  >("title");
+  const { getPermission } = useKindeAuth();
   const [tasksData, setTasksData] = useState<ITask[]>([]);
 
   useEffect(() => {
-    if (tasks && !getPermission("is-manager").isGranted) {
+    if (tasks && getPermission && !getPermission("is-manager").isGranted) {
       // const filteredTasks = tasks.filter((task) => task.createdBy.id === id);
       setTasksData(tasks);
       setIsLoading(false);
@@ -73,11 +85,40 @@ const TasksList = () => {
       <div className="flex items-center gap-4 w-[95%] h-[40px]">
         <p className="text-sm ">total tasks : {tasksData?.length}</p>
         <DataTableViewOptions table={table} />{" "}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="h-full" asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className=" hidden h-full lg:flex w-fit"
+            >
+              <MixerHorizontalIcon className="mx-2 h-4 w-4" />
+              select filter
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-[50px]">
+            <DropdownMenuSeparator />
+            {["title", "state", "priority"].map((column) => {
+              return (
+                <DropdownMenuCheckboxItem
+                  onClick={() => setSearchState(column as 'state' | 'priority' | 'title')}
+                  key={column}
+                  className="capitalize"
+                  checked={searchState === column}
+                >
+                  {column}
+                </DropdownMenuCheckboxItem>
+              );
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Input
-          placeholder="Filter titles..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder={`Filter ${searchState}...`}
+          value={
+            (table.getColumn(searchState)?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn(searchState)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

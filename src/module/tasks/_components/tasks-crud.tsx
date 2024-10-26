@@ -97,11 +97,7 @@ const TaskManager = () => {
 
   const onSubmit = (data: any) => {
     data.createdBy = getUser();
-    const ids = assignedEmplpoyees?.map((emp) => emp.id);
-    const emps = employees.filter((emp) => ids?.includes(emp.id));
-    data.assignedTo = emps;
     if (!id) {
-      console.log(data);
       dispatch(addTaskAction(data));
       dispatch(createTaskAction({ id: getUser()?.id ?? "", data }));
     } else if (id) {
@@ -253,6 +249,11 @@ const TaskManager = () => {
                         label: `${employee?.given_name} ${employee?.family_name}`,
                       }))}
                       value={(e) => {
+                        const ids = e?.map((emp) => emp.id);
+                        const emps = employees.filter((emp) =>
+                          ids?.includes(emp.id)
+                        );
+                        taskForm.setValue("assignedTo", emps);
                         setAssignedEmplpoyees(e);
                       }}
                     />

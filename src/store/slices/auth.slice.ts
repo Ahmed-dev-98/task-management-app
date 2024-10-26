@@ -1,15 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
-import { ITask } from "./tasks.slice"
+import { IUser } from "@/app/types/types";
 
-export interface IUser {
-    email: string | null
-    family_name: string | null
-    given_name: string | null
-    id: string | null
-    picture: string | null
-    tasks: ITask[]
-}
+
 const initialState = {
     email: '',
     family_name: '',
@@ -18,9 +11,6 @@ const initialState = {
     picture: '',
     tasks: []
 }
-
-
-
 const authSlice = createSlice({
     name: 'auth',
     initialState,

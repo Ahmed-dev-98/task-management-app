@@ -1,4 +1,4 @@
-import { ITask } from "@/module/tasks/Tasks-list";
+import { ITask } from "@/app/types/types";
 import { useAppSelector } from "@/store";
 import { selectTasks } from "@/store/slices/tasks.slice";
 import { useEffect, useState } from "react";

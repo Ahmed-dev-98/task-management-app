@@ -17,8 +17,8 @@ import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { CaretSortIcon, EyeNoneIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import TableActions from "@/shared/table/table-actions";
-import { ITask } from "../Tasks-list";
 import { ROUTES } from "@/app/router/routes";
+import { ITask } from "@/app/types/types";
 
 export const columns: ColumnDef<ITask>[] = [
   {

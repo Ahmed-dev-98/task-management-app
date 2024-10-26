@@ -9,7 +9,7 @@ import { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TaskCard from "./TaskCard";
 import toast from "react-hot-toast";
-import { ITask } from "@/module/tasks/Tasks-list";
+import { ITask } from "@/app/types/types";
 
 const KanbanBoard = () => {
   const user = useAppSelector(selectUser);

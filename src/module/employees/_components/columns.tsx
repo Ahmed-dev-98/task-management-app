@@ -12,7 +12,7 @@ import { CaretSortIcon, EyeNoneIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import TableActions from "@/shared/table/table-actions";
 import { ROUTES } from "@/app/router/routes";
-import { IEmployee } from "@/store/slices/employees.slice";
+import { IEmployee } from "@/app/types/types";
 
 export const columns: ColumnDef<IEmployee>[] = [
   {

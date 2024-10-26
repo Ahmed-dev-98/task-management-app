@@ -19,12 +19,12 @@ import * as Yup from "yup";
 import MainSelect from "@/shared/ui/MainSelect";
 import {
   createEmployeeAction,
-  IEmployee,
   updateEmployeeAction,
 } from "@/store/slices/employees.slice";
 import { v4 as uuidv4 } from "uuid";
 import { ROUTES } from "@/app/router/routes";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IEmployee } from "@/app/types/types";
 
 const EmployeeManager = () => {
   const [selectedImg, setSelectedImg] = useState("");

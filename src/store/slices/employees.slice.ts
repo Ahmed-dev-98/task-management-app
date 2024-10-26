@@ -1,18 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
-import { ITask } from "@/module/tasks/Tasks-list"
+import { IEmployee, ITask } from "@/app/types/types"
 
 
-export interface IEmployee {
-    email: string
-    family_name: string
-    given_name: string
-    id: string
-    picture: string
-    tasks?: ITask[]
-    assignedTasks?: ITask[]
-
-}
 
 const initialState: IEmployee[] = [{
     email: 'john.doe@example.com',

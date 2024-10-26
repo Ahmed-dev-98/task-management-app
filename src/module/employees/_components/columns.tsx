@@ -33,7 +33,7 @@ export const columns: ColumnDef<IEmployee>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "given_name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
@@ -87,7 +87,6 @@ interface DataTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
-// todo add to shared
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,

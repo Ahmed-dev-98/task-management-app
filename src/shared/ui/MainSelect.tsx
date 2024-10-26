@@ -117,7 +117,7 @@ const MainSelect: React.FC<MainSelectProps> = ({
         const spaceBelow = window.innerHeight - rect.bottom;
         const spaceAbove = rect.top;
 
-        setOpenUpwards(spaceBelow < 200 && spaceAbove > spaceBelow); // Adjust threshold as needed
+        setOpenUpwards(spaceBelow < 200 && spaceAbove > spaceBelow);
       }
     }
   };
@@ -163,12 +163,11 @@ const MainSelect: React.FC<MainSelectProps> = ({
         <div>{isDropdownOpen ? arrowUp : arrowDown}</div>
       </div>
 
-      {/* Dropdown Options */}
       {isDropdownOpen && (
         <div
           className={cn(
             "absolute w-full bg-white border border-gray-300 rounded shadow-lg z-[100]",
-            openUpwards ? "bottom-full mb-2" : "mt-2" // Adjust dropdown position
+            openUpwards ? "bottom-full mb-2" : "mt-2"
           )}
         >
           {/* Search Input */}

@@ -67,13 +67,13 @@ const KanbanBoard = () => {
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
 
-    if (!destination) return; // if dropped outside any droppable area, do nothing
+    if (!destination) return;
 
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      return; // if dropped in the same spot, do nothing
+      return; 
     }
 
     const sourceColumn = data.columns[source.droppableId];

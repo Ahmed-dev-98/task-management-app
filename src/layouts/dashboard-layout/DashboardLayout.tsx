@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router";
+import { Navigate, Outlet, useNavigate } from "react-router";
 import Navbar from "./_components/Navbar";
 import Sidebar from "./_components/Sidebar";
 import ModuleContainer from "@/shared/ui/modules-container";
@@ -12,6 +12,7 @@ import {
   selectEmployees,
 } from "@/store/slices/employees.slice";
 import ApiLoader from "@/shared/ui/api-loader";
+import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
   const { isLoading, isAuthenticated, getUser } = useKindeAuth();
@@ -41,11 +42,13 @@ const DashboardLayout = () => {
         <ApiLoader />
       </div>
     );
-
+  if (!getUser()?.id) {
+    toast.error("Your session expired, please login again");
+    return <Navigate to={ROUTES.MAIN} replace />;
+  }
   return (
     <div className="flex h-screen w-full ">
       <Sidebar />
-
       <div className="w-full  bg-[#f9fafc] flex flex-col">
         <Navbar />
         <div className="w-full h-[calc(100%-200px)]">

@@ -33,7 +33,9 @@ import toast from "react-hot-toast";
 const EmployeesList = () => {
   const [isLoading] = useState(false);
   const employees = useAppSelector(selectEmployees);
-  const [searchState, setSearchState] = useState<"name" | "email">("name");
+  const [searchState, setSearchState] = useState<"given_name" | "email">(
+    "given_name"
+  );
   const { getPermission } = useKindeAuth();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -66,15 +68,17 @@ const EmployeesList = () => {
               className=" hidden h-full lg:flex w-fit"
             >
               <MixerHorizontalIcon className="mx-2 h-4 w-4" />
-              select filter
+              Select filter
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[50px]">
             <DropdownMenuSeparator />
-            {["name", "email"].map((column) => {
+            {["given_name", "email"].map((column) => {
               return (
                 <DropdownMenuCheckboxItem
-                  onClick={() => setSearchState(column as "email" | "name")}
+                  onClick={() =>
+                    setSearchState(column as "email" | "given_name")
+                  }
                   key={column}
                   className="capitalize"
                   checked={searchState === column}

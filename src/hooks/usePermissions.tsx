@@ -9,9 +9,7 @@ const usePermissions = (taskId: string, taskTeam: string[]) => {
   useEffect(() => {
     const user = getUser();
     setUserId(user?.id || null);
-
     const isAuthorized = getPermission && getPermission("is-manager").isGranted;
-
     setIsManager(isAuthorized);
   }, []);
 

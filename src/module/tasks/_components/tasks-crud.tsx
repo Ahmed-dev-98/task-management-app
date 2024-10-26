@@ -94,7 +94,6 @@ const TaskManager = () => {
       })
     ),
   });
-
   const onSubmit = (data: any) => {
     data.createdBy = getUser();
     if (!id) {
@@ -118,7 +117,7 @@ const TaskManager = () => {
         label: location?.state?.state,
       });
       setAssignedEmplpoyees(
-        location?.state?.assignedTo.map(
+        location?.state?.assignedTo?.map(
           (emp: { id: string; given_name: string; family_name: string }) => ({
             id: emp.id,
             label: `${emp.given_name} ${emp.family_name}`,
@@ -133,7 +132,7 @@ const TaskManager = () => {
         },
       ]);
     }
-  }, [id]);
+  }, [id, location?.state]);
 
   useEffect(() => {
     console.log("Roles:", { isManager, isTaskAuthor, isMember });
@@ -168,12 +167,12 @@ const TaskManager = () => {
                 setSelectedImg={setSelectedImg}
                 setImage={(e) => taskForm.setValue("image", e)}
               />
-              {taskForm.formState.errors.image && (
-                <FormMessage
-                  className="text-center mt-2"
-                  children={taskForm.formState.errors.image.message}
-                />
-              )}
+              {taskForm.formState.errors.image &&
+                !taskForm.formState.isDirty && (
+                  <FormMessage className="text-center mt-2">
+                    {taskForm.formState.errors.image.message}
+                  </FormMessage>
+                )}
             </div>
             <FormField
               control={taskForm.control}
@@ -244,13 +243,13 @@ const TaskManager = () => {
                           : []
                       }
                       badgeClassName={` bg-blue-100 text-blue-600 rounded-sm  text-sm font-medium`}
-                      options={employees.map((employee) => ({
+                      options={employees?.map((employee) => ({
                         id: employee?.id,
                         label: `${employee?.given_name} ${employee?.family_name}`,
                       }))}
                       value={(e) => {
-                        const ids = e?.map((emp) => emp.id);
-                        const emps = employees.filter((emp) =>
+                        const ids = e?.map((emp: { id: string }) => emp.id);
+                        const emps = employees?.filter((emp) =>
                           ids?.includes(emp.id)
                         );
                         taskForm.setValue("assignedTo", emps);
@@ -294,7 +293,12 @@ const TaskManager = () => {
                         }}
                       />
                     </FormControl>
-                    <FormMessage />
+                    {taskForm.formState.errors.priority &&
+                      !taskForm.formState.isDirty && (
+                        <FormMessage className="text-center mt-2">
+                          {taskForm.formState.errors.priority.message}
+                        </FormMessage>
+                      )}
                   </FormItem>
                 )}
               />
@@ -328,7 +332,12 @@ const TaskManager = () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    {taskForm.formState.errors.state &&
+                      !taskForm.formState.isDirty && (
+                        <FormMessage className="text-center mt-2">
+                          {taskForm.formState.errors.state.message}
+                        </FormMessage>
+                      )}
                   </FormItem>
                 )}
               />{" "}

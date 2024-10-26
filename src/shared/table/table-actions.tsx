@@ -7,18 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import { Edit, MoreHorizontal, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
-import { ITask } from "@/module/tasks/Tasks-list";
 import { useAppDispatch } from "@/store";
 import { deleteTaskAction } from "@/store/slices/tasks.slice";
-import {
-  deleteEmployeeAction,
-  IEmployee,
-} from "@/store/slices/employees.slice";
+import { deleteEmployeeAction } from "@/store/slices/employees.slice";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import toast from "react-hot-toast";
+import { IEmployee, ITask } from "@/app/types/types";
 
 const TableActions = ({
   objectData,
@@ -43,7 +40,7 @@ const TableActions = ({
     } else if (module === "tasks") {
       const data = objectData as ITask;
       if (
-        user?.id === data.createdBy.id ||
+        user?.id === data?.createdBy?.id ||
         (getPermission && getPermission("is-manager").isGranted)
       ) {
         dispatch(deleteTaskAction(data.id));
@@ -109,13 +106,7 @@ const TableActions = ({
             <Trash2 size={16} />
           </div>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          <div className="flex items-center justify-between w-full">
-            <p>View</p>
-            <Eye size={16} />{" "}
-          </div>
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
       </DropdownMenuContent>
     </DropdownMenu>

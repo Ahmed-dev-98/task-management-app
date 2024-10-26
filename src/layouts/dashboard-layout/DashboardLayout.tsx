@@ -28,11 +28,13 @@ const DashboardLayout = () => {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(setUser({ ...getUser(), tasks: [] }));
+      localStorage.setItem("user", JSON.stringify(getUser()));
       // added this fn to add user when using kinde auth
       injectUser();
       navigate(ROUTES.TASKS);
     }
   }, [isAuthenticated]);
+
   if (isLoading)
     return (
       <div className="w-full h-screen ">

@@ -29,19 +29,9 @@ import { ROUTES } from "@/app/router/routes";
 import { useAppSelector } from "@/store";
 import { selectTasks } from "@/store/slices/tasks.slice";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-import { IEmployee } from "@/store/slices/employees.slice";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import { ITask } from "@/app/types/types";
 
-export interface ITask {
-  id: string;
-  image: string;
-  title: string;
-  description: string;
-  priority: "high" | "medium" | "low";
-  state: "todo" | "doing" | "done";
-  assignedTo?: IEmployee[];
-  createdBy?: any;
-}
 const TasksList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const tasks = useAppSelector(selectTasks);

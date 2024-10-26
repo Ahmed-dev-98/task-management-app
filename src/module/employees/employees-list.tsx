@@ -27,12 +27,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import toast from "react-hot-toast";
 
 const EmployeesList = () => {
   const [isLoading] = useState(false);
   const employees = useAppSelector(selectEmployees);
   const [searchState, setSearchState] = useState<"name" | "email">("name");
-
+  const { getPermission } = useKindeAuth();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const navigate = useNavigate();
@@ -93,7 +95,15 @@ const EmployeesList = () => {
           }
           className="max-w-sm"
         />
-        <Button onClick={() => navigate(ROUTES.CREATE_EMPLOYEE)}>
+        <Button
+          onClick={() => {
+            if (getPermission && getPermission("is-manager").isGranted) {
+              navigate(ROUTES.CREATE_EMPLOYEE);
+            } else {
+              toast.error("You don't have permission to add employees");
+            }
+          }}
+        >
           Add Employee
         </Button>
       </div>

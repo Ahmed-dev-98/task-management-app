@@ -6,7 +6,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 class mediaService {
 
     public uploadImage = async (file) => {
-        console.log(file);
 
         if (!file) return;
 

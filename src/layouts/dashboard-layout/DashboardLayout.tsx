@@ -4,18 +4,30 @@ import Sidebar from "./_components/Sidebar";
 import ModuleContainer from "@/shared/ui/modules-container";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { useEffect } from "react";
-import { useAppDispatch } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { setUser } from "@/store/slices/auth.slice";
 import { ROUTES } from "@/app/router/routes";
+import {
+  createEmployeeAction,
+  selectEmployees,
+} from "@/store/slices/employees.slice";
 
 const DashboardLayout = () => {
   const { isLoading, isAuthenticated, getUser } = useKindeAuth();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const empoyees = useAppSelector(selectEmployees);
+  const isUserExist = () => {
+    const user = empoyees.find((emp) => emp.id === getUser().id);
+    if (!user) {
+      dispatch(createEmployeeAction(getUser()));
+    }
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(setUser(getUser()));
+      isUserExist();
       navigate(ROUTES.TASKS);
     }
   }, [isAuthenticated]);
@@ -25,7 +37,7 @@ const DashboardLayout = () => {
     <div className="flex h-screen w-full ">
       <Sidebar />
 
-      <div className="w-full  bg-slate-200 flex flex-col">
+      <div className="w-full  bg-[#f9fafc] flex flex-col">
         <Navbar />
         <div className="w-full h-[calc(100%-200px)]">
           <ModuleContainer>

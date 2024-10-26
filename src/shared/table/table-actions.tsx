@@ -13,16 +13,45 @@ import { ROUTES } from "@/app/router/routes";
 import { ITask } from "@/module/tasks/Tasks-list";
 import { useAppDispatch } from "@/store";
 import { deleteTaskAction } from "@/store/slices/tasks.slice";
+import {
+  deleteEmployeeAction,
+  IEmployee,
+} from "@/store/slices/employees.slice";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import toast from "react-hot-toast";
 
 const TableActions = ({
-  task,
+  objectData,
   navigator,
+  module,
 }: {
-  task: ITask;
+  objectData: ITask | IEmployee;
   navigator: ROUTES;
+  module: "tasks" | "employees";
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { getPermission, user } = useKindeAuth();
+  const handleDelete = () => {
+    if (module === "employees") {
+      if (getPermission("is-manager").isGranted) {
+        dispatch(deleteEmployeeAction(objectData.id));
+        toast.success("employee deleted successfully");
+      } else {
+        toast.error("You don't have permission to delete employees");
+      }
+    } else if (module === "tasks") {
+      if (
+        user?.id === objectData.createdBy.id ||
+        getPermission("is-manager").isGranted
+      ) {
+        dispatch(deleteTaskAction(objectData.id));
+        toast.success("Task deleted successfully");
+      } else {
+        toast.error("only the creator can delete tasks");
+      }
+    }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,9 +64,11 @@ const TableActions = ({
         <DropdownMenuLabel className="text-center">Actions</DropdownMenuLabel>
         <DropdownMenuItem>
           <div
-            onClick={() =>
-              navigate(`${navigator.replace(":id", task.id)}`, { state: task })
-            }
+            onClick={() => {
+              navigate(`${navigator.replace(":id", objectData.id)}`, {
+                state: objectData,
+              });
+            }}
             className="flex items-center justify-between space-x-2 w-full px-3 "
           >
             <p>Edit</p>
@@ -48,7 +79,9 @@ const TableActions = ({
           {" "}
           <div className="flex items-center justify-between space-x-2 w-full px-3 ">
             <Button
-              onClick={() => dispatch(deleteTaskAction(task.id))}
+              onClick={() => {
+                handleDelete();
+              }}
               variant="destructive"
             >
               Delete

@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
-import { v4 as uuidv4 } from 'uuid';
+import { IEmployee } from "./employees.slice"
 
-interface ITask {
+export interface ITask {
     id: string
     title: string,
     image: string,
     description: string,
+    assignedTo: IEmployee[],
     priority: 'high' | 'medium' | 'low',
     state: 'todo' | 'doing' | 'done',
-    createdBy: {
+    createdBy?: {
         email: string
         family_name: string
         given_name: string
@@ -25,6 +26,40 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Design Login Page",
         description: "Create a user-friendly login page layout.",
+        assignedTo: [
+            {
+                email: 'jane.smith@example.com',
+                family_name: 'Smith',
+                given_name: 'Jane',
+                id: '2',
+                picture: 'https://randomuser.me/api/portraits/women/2.jpg',
+                tasks: []
+            },
+            {
+                email: 'bob.johnson@example.com',
+                family_name: 'Johnson',
+                given_name: 'Bob',
+                id: '3',
+                picture: 'https://randomuser.me/api/portraits/men/3.jpg',
+                tasks: []
+            },
+            {
+                email: 'alice.brown@example.com',
+                family_name: 'Brown',
+                given_name: 'Alice',
+                id: '4',
+                picture: 'https://randomuser.me/api/portraits/women/4.jpg',
+                tasks: []
+            },
+            {
+                email: 'michael.davis@example.com',
+                family_name: 'Davis',
+                given_name: 'Michael',
+                id: '5',
+                picture: 'https://randomuser.me/api/portraits/men/5.jpg',
+                tasks: []
+            },
+        ],
         priority: "high",
         state: "todo",
         createdBy: {
@@ -41,21 +76,17 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Setup Database",
         description: "Set up the initial database schema.",
+        assignedTo: [],
         priority: "high",
         state: "doing",
-        createdBy: {
-            email: "ahmed.h.mohamed98@gmail.com",
-            family_name: "Hassan",
-            given_name: "Ahmed",
-            id: "kp_e0f97c534cf94dbe92fa44c8c1e36809",
-            picture: "https://gravatar.com/avatar/0952a508d585760f0aff4bda4f41f4baecfeec1ff56bd2ff62ed64040e01d170?d=blank&size=200"
-        }
+
     },
     {
         id: "3",
         image: "https://via.placeholder.com/150",
         title: "Write Documentation",
         description: "Document all API endpoints and usage.",
+        assignedTo: [],
         priority: "medium",
         state: "todo",
         createdBy: {
@@ -71,6 +102,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Implement Authentication",
         description: "Add JWT authentication for the app.",
+        assignedTo: [],
         priority: "high",
         state: "doing",
         createdBy: {
@@ -86,13 +118,14 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Design Landing Page",
         description: "Design a responsive landing page.",
+        assignedTo: [],
         priority: "medium",
         state: "todo",
         createdBy: {
             email: "ahmed.h.mohamed98@gmail.com",
             family_name: "Hassan",
             given_name: "Ahmed",
-            id: "kp_e0f97c534cf94dbe92fa44c8c1e36809",
+            id: "111111",
             picture: "https://gravatar.com/avatar/0952a508d585760f0aff4bda4f41f4baecfeec1ff56bd2ff62ed64040e01d170?d=blank&size=200"
         }
     },
@@ -101,6 +134,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Optimize Images",
         description: "Compress and optimize images for faster load.",
+        assignedTo: [],
         priority: "low",
         state: "done",
         createdBy: {
@@ -116,6 +150,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Implement Search Feature",
         description: "Add search functionality to the app.",
+        assignedTo: [],
         priority: "high",
         state: "doing",
         createdBy: {
@@ -131,6 +166,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Add Analytics",
         description: "Integrate Google Analytics.",
+        assignedTo: [],
         priority: "medium",
         state: "todo",
         createdBy: {
@@ -146,6 +182,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Fix Mobile Layout Issues",
         description: "Resolve styling issues on mobile.",
+        assignedTo: [],
         priority: "high",
         state: "todo",
         createdBy: {
@@ -161,6 +198,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Add Notification System",
         description: "Implement a system for push notifications.",
+        assignedTo: [],
         priority: "medium",
         state: "doing",
         createdBy: {
@@ -176,6 +214,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Code Review",
         description: "Review and refactor old code.",
+        assignedTo: [],
         priority: "low",
         state: "done",
         createdBy: {
@@ -191,6 +230,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Implement Dark Mode",
         description: "Add dark mode toggle to the app.",
+        assignedTo: [],
         priority: "medium",
         state: "todo",
         createdBy: {
@@ -206,6 +246,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Optimize API Calls",
         description: "Reduce and optimize API call frequency.",
+        assignedTo: [],
         priority: "high",
         state: "doing",
         createdBy: {
@@ -221,6 +262,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Create Test Cases",
         description: "Write test cases for all modules.",
+        assignedTo: [],
         priority: "medium",
         state: "done",
         createdBy: {
@@ -236,6 +278,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Integrate OAuth",
         description: "Enable Google OAuth for easy sign-in.",
+        assignedTo: [],
         priority: "high",
         state: "todo",
         createdBy: {
@@ -251,6 +294,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Design 404 Page",
         description: "Add a custom 404 error page.",
+        assignedTo: [],
         priority: "low",
         state: "done",
         createdBy: {
@@ -266,6 +310,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Setup Caching",
         description: "Add caching mechanism for improved speed.",
+        assignedTo: [],
         priority: "medium",
         state: "doing",
         createdBy: {
@@ -281,6 +326,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Create FAQ Section",
         description: "Develop an FAQ page for common issues.",
+        assignedTo: [],
         priority: "low",
         state: "todo",
         createdBy: {
@@ -296,6 +342,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "UI Testing",
         description: "Perform UI tests on all major devices.",
+        assignedTo: [],
         priority: "high",
         state: "doing",
         createdBy: {
@@ -311,6 +358,7 @@ const initialState: ITask[] = [
         image: "https://via.placeholder.com/150",
         title: "Add Accessibility Features",
         description: "Enhance app accessibility for screen readers.",
+        assignedTo: [],
         priority: "medium",
         state: "done",
         createdBy: {
@@ -330,7 +378,7 @@ const tasksSlice = createSlice({
     initialState,
     reducers: {
         addTask: (state: ITask[], action: PayloadAction<ITask>) => {
-            state.push({ ...action.payload, id: uuidv4() });
+            state.push(action.payload);
 
         },
 
@@ -344,7 +392,7 @@ const tasksSlice = createSlice({
             if (index !== -1) state.splice(index, 1);
         },
         userTasks: (state: ITask[], action: PayloadAction<string>) => {
-            return state.filter((task) => task.createdBy.id === action.payload)
+            return state.filter((task) => task.createdBy?.id === action.payload)
         },
     },
 })

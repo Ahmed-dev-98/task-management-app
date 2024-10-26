@@ -64,6 +64,36 @@ export const columns: ColumnDef<ITask>[] = [
     },
   },
   {
+    accessorKey: "assignedTo",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Assigned employees" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-start relative flex justify-center  w-full">
+          {row.original.assignedTo && row.original.assignedTo.length > 0 ? (
+            row.original.assignedTo.map((emp, index) => (
+              <div
+                style={{
+                  left: `${index * 20}px`,
+                  zIndex: `{index}`,
+                }}
+                className="w-8 h-8 rounded-full text-white bg-[#294664] border border-black absolute flex justify-center items-center"
+              >
+                <p
+                  className="text-xs font-medium cursor-default"
+                  title={`${emp.given_name} ${emp.family_name}`}
+                >{`${emp.given_name.charAt(0)}${emp.family_name.charAt(0)}`}</p>
+              </div>
+            ))
+          ) : (
+            <p className="italic text-gray-400">- No assigned employees -</p>
+          )}{" "}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -129,7 +159,13 @@ export const columns: ColumnDef<ITask>[] = [
       <DataTableColumnHeader column={column} title="Actions" />
     ),
     cell: ({ row }) => {
-      return <TableActions navigator={ROUTES.EDIT_TASK} task={row.original} />;
+      return (
+        <TableActions
+          module="tasks"
+          navigator={ROUTES.EDIT_TASK}
+          objectData={row.original}
+        />
+      );
     },
   },
 ];

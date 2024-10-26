@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -5,7 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 class mediaService {
 
-    public uploadImage = async (file) => {
+    public uploadImage = async (file: any) => {
 
         if (!file) return;
 

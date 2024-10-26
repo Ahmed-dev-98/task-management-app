@@ -35,7 +35,9 @@ const Profile = () => {
           <p className="text-sm"> Email : {user.email}</p>
           <p className="text-sm">
             Role :{" "}
-            {getPermission("is-manager").isGranted ? "Manager" : "Employee"}
+            {getPermission && getPermission("is-manager").isGranted
+              ? "Manager"
+              : "Employee"}
           </p>
           <p className="text-sm"> Created tasks : {tasks.length}</p>
         </div>

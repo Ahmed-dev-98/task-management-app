@@ -23,7 +23,7 @@ const KanbanBoard = () => {
   };
   tasks.forEach((task) => {
     if (task.assignedTo.some((assignedUser) => assignedUser.id === user.id)) {
-      organizedTasks[task.state].push(task.id); // Collect task IDs by their state
+      organizedTasks[task.state].push(task.id);
     }
   });
   const initialData = {
@@ -45,7 +45,7 @@ const KanbanBoard = () => {
       },
     },
     tasks: tasks.reduce((acc, task) => {
-      acc[task.id] = { ...task }; // Build tasks map for rendering
+      acc[task.id] = { ...task };
       return acc;
     }, {}),
     columnOrder: ["todo", "doing", "done"],
@@ -124,7 +124,7 @@ const KanbanBoard = () => {
         {data.columnOrder.map((columnId) => {
           const column = data.columns[columnId];
           const columnTasks = column.taskIds.map(
-            (taskId) => data.tasks[taskId]
+            (taskId: string) => data.tasks[taskId]
           );
 
           return (

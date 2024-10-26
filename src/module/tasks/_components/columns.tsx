@@ -85,6 +85,7 @@ export const columns: ColumnDef<ITask>[] = [
           {row.original.assignedTo && row.original.assignedTo.length > 0 ? (
             row.original.assignedTo.map((emp, index) => (
               <div
+                key={emp.id}
                 style={{
                   left: `${index * 20}px`,
                   zIndex: `{index}`,

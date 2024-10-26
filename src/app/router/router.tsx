@@ -11,6 +11,7 @@ import TasksLayout from "@/module/tasks/tasks-layout";
 import EmployeesLayout from "@/module/employees/employees-layout";
 import EmployeesList from "@/module/employees/employees-list";
 import EmployeeManager from "@/module/employees/_components/employee-crud";
+import ProtectedRoute from "@/layouts/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,12 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Tasks /> },
           { path: "create", element: <TaskManager /> },
-          { path: "edit/:id", element: <TaskManager /> },
+          {
+            path: "edit/:id",
+            element: (
+              <ProtectedRoute module="tasks" element={<TaskManager />} />
+            ),
+          },
         ],
       },
       {
@@ -37,8 +43,24 @@ const router = createBrowserRouter([
         element: <EmployeesLayout />,
         children: [
           { index: true, element: <EmployeesList /> },
-          { path: "create", element: <EmployeeManager /> },
-          { path: "edit/:id", element: <EmployeeManager /> },
+          {
+            path: "create",
+            element: (
+              <ProtectedRoute
+                module="employees"
+                element={<EmployeeManager />}
+              />
+            ),
+          },
+          {
+            path: "edit/:id",
+            element: (
+              <ProtectedRoute
+                module="employees"
+                element={<EmployeeManager />}
+              />
+            ),
+          },
         ],
       },
       { path: ROUTES.PROFILE, element: <Profile /> },

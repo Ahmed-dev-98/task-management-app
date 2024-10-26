@@ -8,7 +8,6 @@ import {
 
 export const description = "A donut chart with text";
 
-// Chart configuration for task statuses
 const taskChartConfig = {
   taskCount: {
     label: "Task Count",
@@ -50,7 +49,7 @@ export function TasksPieChart({
         />
         <Pie
           data={taskData}
-          dataKey="taskCount" // Corrected dataKey to match taskData
+          dataKey="taskCount"
           nameKey="status"
           innerRadius={60}
           outerRadius={100}

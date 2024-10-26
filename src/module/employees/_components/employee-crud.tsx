@@ -59,36 +59,43 @@ const EmployeeManager = () => {
     ),
   });
   useEffect(() => {
-    if (location.state) {
-      employeeForm.reset(location.state);
-      setSelectedImg(location.state.picture);
+    if (location?.state) {
+      employeeForm.reset(location?.state);
+      setSelectedImg(location?.state?.picture);
       setSelectedTasks(
-        location.state.tasks.map((task: any) => ({
-          id: task.id,
-          label: task.title,
-        }))
+        tasks
+          ?.filter((task) =>
+            task.assignedTo.some((e) => e.id === location?.state?.id)
+          )
+          .map((task) => ({ id: task.id, label: task.title }))
       );
     }
   }, [id]);
 
   const onSubmit = (data: any) => {
-    const ids = selectedTasks.map((task) => task.id);
-    const updatedTasks = tasks.filter((task) => ids.includes(task.id));
-    data.assignedTasks = updatedTasks;
-
+    const selectedTaskIds = selectedTasks.map((task) => task.id);
+    const updatedTasks = tasks.filter((task) =>
+      selectedTaskIds.includes(task.id)
+    );
+    data.assignedTasks = [...updatedTasks];
     if (!id) {
       dispatch(createEmployeeAction(data));
     } else {
-      updatedTasks.map((task) => {
-        dispatch(
-          updateTaskAction({
-            ...task,
-            assignedTo: [...task.assignedTo, location.state],
-          })
-        );
+      tasks.forEach((task) => {
+        const isSelected = selectedTaskIds.includes(task.id);
+        const newAssignedTo = isSelected
+          ? [
+              ...task.assignedTo.filter((e) => e.id !== location.state.id),
+              location.state,
+            ]
+          : task.assignedTo.filter((e) => e.id !== location.state.id);
+
+        dispatch(updateTaskAction({ ...task, assignedTo: newAssignedTo }));
       });
+
       dispatch(updateEmployeeAction(data));
     }
+
     navigate(ROUTES.EMPLOYEES);
   };
   return (
@@ -185,6 +192,7 @@ const EmployeeManager = () => {
                       }))}
                       value={(e) => {
                         setSelectedTasks(e);
+                        console.log(e);
                       }}
                     />
                   </FormControl>

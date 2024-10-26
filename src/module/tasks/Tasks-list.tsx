@@ -43,7 +43,6 @@ const TasksList = () => {
 
   useEffect(() => {
     if (tasks && getPermission && !getPermission("is-manager").isGranted) {
-      // const filteredTasks = tasks.filter((task) => task.createdBy.id === id);
       setTasksData(tasks);
       setIsLoading(false);
     } else {
@@ -83,7 +82,7 @@ const TasksList = () => {
               className=" hidden h-full lg:flex w-fit"
             >
               <MixerHorizontalIcon className="mx-2 h-4 w-4" />
-              select filter
+              Select filter
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[50px]">
@@ -91,7 +90,9 @@ const TasksList = () => {
             {["title", "state", "priority"].map((column) => {
               return (
                 <DropdownMenuCheckboxItem
-                  onClick={() => setSearchState(column as 'state' | 'priority' | 'title')}
+                  onClick={() =>
+                    setSearchState(column as "state" | "priority" | "title")
+                  }
                   key={column}
                   className="capitalize"
                   checked={searchState === column}

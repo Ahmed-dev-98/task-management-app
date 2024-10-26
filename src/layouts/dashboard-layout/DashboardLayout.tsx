@@ -17,17 +17,18 @@ const DashboardLayout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const empoyees = useAppSelector(selectEmployees);
-  const isUserExist = () => {
+  const injectUser = () => {
     const user = empoyees.find((emp) => emp.id === getUser().id);
     if (!user) {
-      dispatch(createEmployeeAction(getUser()));
+      dispatch(createEmployeeAction({ ...getUser(), tasks: [] }));
     }
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(setUser(getUser()));
-      isUserExist();
+      dispatch(setUser({ ...getUser(), tasks: [] }));
+      // added this fn to add user when using kinde auth
+      injectUser();
       navigate(ROUTES.TASKS);
     }
   }, [isAuthenticated]);

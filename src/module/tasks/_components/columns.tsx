@@ -64,6 +64,17 @@ export const columns: ColumnDef<ITask>[] = [
     },
   },
   {
+    accessorKey: "createdBy",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Owner" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-start ">{`${row.original.createdBy?.given_name} ${row.original.createdBy?.family_name}`}</div>
+      );
+    },
+  },
+  {
     accessorKey: "assignedTo",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Assigned employees" />

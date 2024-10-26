@@ -20,7 +20,10 @@ import { ROUTES } from "@/app/router/routes";
 import { useLocation, useNavigate, useParams } from "react-router";
 import MainSelect from "@/shared/ui/MainSelect";
 import { v4 as uuidv4 } from "uuid";
-import { selectEmployees } from "@/store/slices/employees.slice";
+import {
+  createTaskAction,
+  selectEmployees,
+} from "@/store/slices/employees.slice";
 import usePermissions from "@/hooks/usePermissions";
 
 const TaskManager = () => {
@@ -84,6 +87,7 @@ const TaskManager = () => {
     if (!id) {
       console.log(data);
       dispatch(addTaskAction(data));
+      dispatch(createTaskAction({ id: getUser()?.id ?? "", data }));
     } else if (id) {
       dispatch(updateTaskAction(data));
     }

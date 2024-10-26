@@ -57,7 +57,7 @@ export const columns: ColumnDef<IEmployee>[] = [
   {
     accessorKey: "tasks",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Total Tasks" />
+      <DataTableColumnHeader column={column} title="Created Tasks" />
     ),
     cell: ({ row }) => {
       return <div className="text-start ">{row.original?.tasks?.length}</div>;

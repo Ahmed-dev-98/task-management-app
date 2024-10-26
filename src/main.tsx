@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
@@ -9,17 +8,15 @@ import store from "./store/store.ts";
 import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <KindeProvider
-        clientId={import.meta.env.VITE_KINDE_CLIENT_ID}
-        domain={import.meta.env.VITE_KINDE_DOMAIN}
-        logoutUri={import.meta.env.VITE_KINDE_LOGOUT_URL}
-        redirectUri={import.meta.env.VITE_KINDE_REDIRECT_URL}
-      >
-        <RouterProvider router={router} />
-        <Toaster position="top-center" reverseOrder={false} />
-      </KindeProvider>{" "}
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <KindeProvider
+      clientId={import.meta.env.VITE_KINDE_CLIENT_ID}
+      domain={import.meta.env.VITE_KINDE_DOMAIN}
+      logoutUri={import.meta.env.VITE_KINDE_LOGOUT_URL}
+      redirectUri={import.meta.env.VITE_KINDE_REDIRECT_URL}
+    >
+      <RouterProvider router={router} />
+      <Toaster position="top-center" reverseOrder={false} />
+    </KindeProvider>{" "}
+  </Provider>
 );

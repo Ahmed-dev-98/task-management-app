@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
 import { ITask } from "@/module/tasks/Tasks-list"
 
@@ -19,52 +19,8 @@ const initialState: IEmployee[] = [{
     given_name: 'John',
     id: '1',
     picture: 'https://randomuser.me/api/portraits/men/1.jpg',
-    tasks: [{
-        id: "1",
-        image: "https://via.placeholder.com/150",
-        title: "Design Login Page",
-        description: "Create a user-friendly login page layout.",
-        priority: "high",
-        state: "todo",
-        createdBy: {
-            email: "ahmed.h.mohamed98@gmail.com",
-            family_name: "Hassan",
-            given_name: "Ahmed",
-            id: "kp_e0f97c534cf94dbe92fa44c8c1e36809",
-            picture: "https://gravatar.com/avatar/0952a508d585760f0aff4bda4f41f4baecfeec1ff56bd2ff62ed64040e01d170?d=blank&size=200"
-        }
-
-    },
-    {
-        id: "2",
-        image: "https://via.placeholder.com/150",
-        title: "Setup Database",
-        description: "Set up the initial database schema.",
-        priority: "high",
-        state: "doing",
-        createdBy: {
-            email: "ahmed.h.mohamed98@gmail.com",
-            family_name: "Hassan",
-            given_name: "Ahmed",
-            id: "kp_e0f97c534cf94dbe92fa44c8c1e36809",
-            picture: "https://gravatar.com/avatar/0952a508d585760f0aff4bda4f41f4baecfeec1ff56bd2ff62ed64040e01d170?d=blank&size=200"
-        }
-    },
-    {
-        id: "3",
-        image: "https://via.placeholder.com/150",
-        title: "Write Documentation",
-        description: "Document all API endpoints and usage.",
-        priority: "medium",
-        state: "todo",
-        createdBy: {
-            email: "ahmed.h.mohamed98@gmail.com",
-            family_name: "Hassan",
-            given_name: "Ahmed",
-            id: "kp_e0f97c534cf94dbe92fa44c8c1e36809",
-            picture: "https://gravatar.com/avatar/0952a508d585760f0aff4bda4f41f4baecfeec1ff56bd2ff62ed64040e01d170?d=blank&size=200"
-        }
-    }]
+    tasks: [
+    ]
 },
 {
     email: 'jane.smith@example.com',
@@ -154,7 +110,11 @@ const employeesSlice = createSlice({
         updateEmployee(state, action) {
             const index = state.findIndex((employee) => employee.id === action.payload.id)
             if (index !== -1) state[index] = action.payload
-        }
+        },
+        createTask: (state, action: PayloadAction<{ id: string, data: ITask }>) => {
+            const index = state.findIndex((employee) => employee.id === action.payload.id)
+            if (index !== -1) state[index].tasks.push(action.payload.data)
+        },
     }
 })
 
@@ -162,6 +122,6 @@ const employeesSlice = createSlice({
 
 export const selectEmployees = (state: RootState) => state.employees
 
-export const { createEmployee: createEmployeeAction, deleteEmployee: deleteEmployeeAction, updateEmployee: updateEmployeeAction } = employeesSlice.actions
+export const { createEmployee: createEmployeeAction, deleteEmployee: deleteEmployeeAction, updateEmployee: updateEmployeeAction, createTask: createTaskAction } = employeesSlice.actions
 
 export default employeesSlice.reducer;

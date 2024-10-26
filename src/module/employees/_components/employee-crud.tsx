@@ -23,6 +23,7 @@ import {
 } from "@/store/slices/employees.slice";
 import { v4 as uuidv4 } from "uuid";
 import { ROUTES } from "@/app/router/routes";
+import { updateUser } from "@/store/slices/auth.slice";
 
 const EmployeeManager = () => {
   const [selectedImg, setSelectedImg] = useState("");
@@ -65,7 +66,10 @@ const EmployeeManager = () => {
     if (!id) {
       dispatch(createEmployeeAction(data));
     } else {
+      console.log(data);
+
       dispatch(updateEmployeeAction(data));
+      dispatch(updateUser(data));
     }
     navigate(ROUTES.EMPLOYEES);
   };

@@ -41,7 +41,6 @@ const TasksList = () => {
 
   useEffect(() => {
     if (tasks && !getPermission("is-manager").isGranted) {
-      const id = getUser()?.id;
       // const filteredTasks = tasks.filter((task) => task.createdBy.id === id);
       setTasksData(tasks);
       setIsLoading(false);

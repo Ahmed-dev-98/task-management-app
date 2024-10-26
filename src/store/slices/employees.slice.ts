@@ -9,7 +9,8 @@ export interface IEmployee {
     given_name: string
     id: string
     picture: string
-    tasks: ITask[]
+    tasks?: ITask[]
+    assignedTasks?: ITask[]
 
 }
 
@@ -113,7 +114,7 @@ const employeesSlice = createSlice({
         },
         createTask: (state, action: PayloadAction<{ id: string, data: ITask }>) => {
             const index = state.findIndex((employee) => employee.id === action.payload.id)
-            if (index !== -1) state[index].tasks.push(action.payload.data)
+            if (index !== -1) state[index].tasks?.push(action.payload.data)
         },
     }
 })

@@ -40,7 +40,7 @@ export const columns: ColumnDef<IEmployee>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-start ">
-          {row.original.given_name} &nbsp; {row.original.family_name}
+          {row.original.given_name}&nbsp;{row.original.family_name}
         </div>
       );
     },

@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, MoreHorizontal, Trash2 } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { ITask } from "@/module/tasks/Tasks-list";
@@ -34,21 +34,46 @@ const TableActions = ({
   const { getPermission, user } = useKindeAuth();
   const handleDelete = () => {
     if (module === "employees") {
-      if (getPermission("is-manager").isGranted) {
+      if (getPermission && getPermission("is-manager").isGranted) {
         dispatch(deleteEmployeeAction(objectData.id));
         toast.success("employee deleted successfully");
       } else {
         toast.error("You don't have permission to delete employees");
       }
     } else if (module === "tasks") {
+      const data = objectData as ITask;
       if (
-        user?.id === objectData.createdBy.id ||
-        getPermission("is-manager").isGranted
+        user?.id === data.createdBy.id ||
+        (getPermission && getPermission("is-manager").isGranted)
       ) {
-        dispatch(deleteTaskAction(objectData.id));
+        dispatch(deleteTaskAction(data.id));
         toast.success("Task deleted successfully");
       } else {
-        toast.error("only the creator can delete tasks");
+        toast.error("only the owner or a manager can delete tasks");
+      }
+    }
+  };
+
+  const handleEdit = () => {
+    if (module === "tasks") {
+      const data = objectData as ITask;
+      if (
+        user?.id === data?.createdBy?.id ||
+        (getPermission && getPermission("is-manager").isGranted)
+      ) {
+        navigate(`${navigator.replace(":id", objectData.id)}`, {
+          state: objectData,
+        });
+      } else {
+        toast.error("only the owner or a manager can edit tasks");
+      }
+    } else if (module === "employees") {
+      if (getPermission && getPermission("is-manager").isGranted) {
+        navigate(`${navigator.replace(":id", objectData.id)}`, {
+          state: objectData,
+        });
+      } else {
+        toast.error("You don't have permission to edit employees");
       }
     }
   };
@@ -64,12 +89,8 @@ const TableActions = ({
         <DropdownMenuLabel className="text-center">Actions</DropdownMenuLabel>
         <DropdownMenuItem>
           <div
-            onClick={() => {
-              navigate(`${navigator.replace(":id", objectData.id)}`, {
-                state: objectData,
-              });
-            }}
-            className="flex items-center justify-between space-x-2 w-full px-3 "
+            onClick={() => handleEdit()}
+            className="flex items-center justify-between w-full"
           >
             <p>Edit</p>
             <Edit size={16} />{" "}
@@ -77,24 +98,22 @@ const TableActions = ({
         </DropdownMenuItem>
         <DropdownMenuItem>
           {" "}
-          <div className="flex items-center justify-between space-x-2 w-full px-3 ">
-            <Button
-              onClick={() => {
-                handleDelete();
-              }}
-              variant="destructive"
-            >
-              Delete
-            </Button>
+          <div
+            onClick={() => {
+              handleDelete();
+            }}
+            className="flex items-center justify-between  w-full  "
+          >
+            <p className="text-xs">Delete</p>
 
             <Trash2 size={16} />
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem>
           {" "}
-          <div className="flex items-center justify-between space-x-2 w-full px-3 ">
+          <div className="flex items-center justify-between w-full">
             <p>View</p>
-            <Edit size={16} />{" "}
+            <Eye size={16} />{" "}
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

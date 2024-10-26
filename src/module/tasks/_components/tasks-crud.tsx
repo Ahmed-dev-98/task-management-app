@@ -19,6 +19,8 @@ import { addTaskAction, updateTaskAction } from "@/store/slices/tasks.slice";
 import { ROUTES } from "@/app/router/routes";
 import { useLocation, useNavigate, useParams } from "react-router";
 import MainSelect from "@/shared/ui/MainSelect";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 import {
   createTaskAction,
@@ -62,7 +64,7 @@ const TaskManager = () => {
     image: string;
     description: string;
     priority: string;
-    state: string;
+    state: "todo" | "doing" | "done";
     createdBy: any;
     id: string;
     assignedTo: any[];
@@ -77,12 +79,26 @@ const TaskManager = () => {
       createdBy: getUser(),
       id: uuidv4(),
     },
+    resolver: yupResolver(
+      Yup.object().shape({
+        title: Yup.string().required("Title is required"),
+        image: Yup.string()
+          .url("Image must be a valid URL")
+          .required("Image is required"),
+        description: Yup.string().required("this field is required"),
+        priority: Yup.string().required("this field is required"),
+        state: Yup.string()
+          .oneOf(["todo", "doing", "done"], "Invalid state")
+          .required("State is required"),
+        assignedTo: Yup.array().min(1, "Please select at least one employee"),
+      })
+    ),
   });
 
   const onSubmit = (data: any) => {
     data.createdBy = getUser();
-    const ids = assignedEmplpoyees.map((emp) => emp.id);
-    const emps = employees.filter((emp) => ids.includes(emp.id));
+    const ids = assignedEmplpoyees?.map((emp) => emp.id);
+    const emps = employees.filter((emp) => ids?.includes(emp.id));
     data.assignedTo = emps;
     if (!id) {
       console.log(data);
@@ -156,6 +172,12 @@ const TaskManager = () => {
                 setSelectedImg={setSelectedImg}
                 setImage={(e) => taskForm.setValue("image", e)}
               />
+              {taskForm.formState.errors.image && (
+                <FormMessage
+                  className="text-center mt-2"
+                  children={taskForm.formState.errors.image.message}
+                />
+              )}
             </div>
             <FormField
               control={taskForm.control}
@@ -202,7 +224,9 @@ const TaskManager = () => {
                 <FormItem className="w-full">
                   <FormLabel
                     children={`Assign to ${
-                      isManager ? "" : "(only can assign yourself)"
+                      isManager
+                        ? ""
+                        : "(only can assign yourself contact your manager)"
                     }`}
                   />
                   <FormControl>

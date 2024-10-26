@@ -65,9 +65,11 @@ const Sidebar = () => {
             logout
           </Button>{" "}
           {/* copyright */}
-          <p className="w-full text-center text-sm pb-3">
-            copyright right reserved @ 2023 ahmed-dev{" "}
-          </p>
+          <footer className=" text-gray-800 py-1 text-center">
+            <p>
+              &copy; {new Date().getFullYear()} Ahmed-dev. All rights reserved.
+            </p>
+          </footer>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import {
   createEmployeeAction,
   selectEmployees,
 } from "@/store/slices/employees.slice";
+import ApiLoader from "@/shared/ui/api-loader";
 
 const DashboardLayout = () => {
   const { isLoading, isAuthenticated, getUser } = useKindeAuth();
@@ -32,7 +33,12 @@ const DashboardLayout = () => {
       navigate(ROUTES.TASKS);
     }
   }, [isAuthenticated]);
-  if (isLoading) return <>Loading...</>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen ">
+        <ApiLoader />
+      </div>
+    );
 
   return (
     <div className="flex h-screen w-full ">

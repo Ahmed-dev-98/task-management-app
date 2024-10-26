@@ -18,3 +18,8 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+:root {
+  --chart-todo-color: 200, 70%, 50%;
+  --chart-doing-color: 140, 70%, 50%;
+  --chart-done-color: 340, 70%, 50%;
+}

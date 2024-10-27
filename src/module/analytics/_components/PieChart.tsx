@@ -40,7 +40,7 @@ export function TasksPieChart({
   return (
     <ChartContainer
       config={taskChartConfig}
-      className="mx-auto aspect-square max-h-[250px] "
+      className="mx-auto aspect-square max-h-[250px]  w-full"
     >
       <PieChart>
         <ChartTooltip

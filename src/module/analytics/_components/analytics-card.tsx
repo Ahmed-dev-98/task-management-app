@@ -14,7 +14,7 @@ const AnalyticsCard = ({
   };
 }) => {
   return (
-    <div className="h-[140px] flex-1 flex flex-col justify-between gap-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+    <div className="h-[140px] flex-1 flex flex-col justify-between gap-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200  hover:shadow-lg transition-shadow duration-300">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-semibold text-gray-800">{card.title}</h2>
         <div className="text-blue-500">{card.icon}</div>

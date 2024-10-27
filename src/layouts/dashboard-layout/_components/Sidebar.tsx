@@ -42,13 +42,13 @@ const Sidebar = () => {
   return (
     <div
       className={`${
-        isOpen.close ? "w-0" : "w-[25%]"
-      } bg-[#f5f5f5] h-full flex flex-col transition-all delay-300 duration-500 ease-in-out overflow-hidden`}
+        isOpen.close ? "w-0 delay-300" : "w-[25%]"
+      } bg-[#f5f5f5] h-full flex flex-col transition-all  duration-500 ease-in-out overflow-hidden`}
     >
       {/* Sidebar Header */}
       <div
         className={`${
-          isOpen.close ? "opacity-0" : ""
+          isOpen.close ? "opacity-0" : "delay-300"
         } transition-all duration-300 w-full flex items-center justify-between px-4 py-5 bg-[#eaeaea] shadow-sm`}
       >
         <h2 className="font-bold text-[#294664]">Task Manager</h2>
@@ -63,7 +63,7 @@ const Sidebar = () => {
 
       <div
         className={`${
-          isOpen.close ? "opacity-0" : ""
+          isOpen.close ? "opacity-0" : "delay-300"
         } transition-all duration-300 flex flex-col justify-between h-[calc(100vh-100px)] px-4 py-6`}
       >
         <ul className="space-y-3">

@@ -11,6 +11,7 @@ import { useAppSelector } from "@/store";
 import { selectTasks } from "@/store/slices/tasks.slice";
 import { TasksPieChart } from "./_components/PieChart";
 import { useEffect, useState } from "react";
+import { TaskBarChart } from "./_components/BarChart";
 
 const Analytics = () => {
   const employees = useAppSelector(selectEmployees);
@@ -65,6 +66,22 @@ const Analytics = () => {
       icon: <StickyNote size={20} />,
     },
   ];
+
+  const overTimeExampleData = [
+    {
+      date: "2024-10-01",
+      todo: todoTasks * Math.random(),
+      doing: doingTasks * Math.random(),
+      done: doneTasks * Math.random(),
+    },
+    {
+      date: "2024-11-02",
+      todo: todoTasks * Math.random(),
+      doing: doingTasks * Math.random(),
+      done: doneTasks * Math.random(),
+    },
+  ];
+
   useEffect(() => {
     setDoneTasks(tasks.filter((task) => task.state === "done").length);
     setDoingTasks(tasks.filter((task) => task.state === "doing").length);
@@ -72,34 +89,37 @@ const Analytics = () => {
   }, [tasks]);
 
   return (
-    <div className="w-full h-full flex flex-col gap-4">
-      <div className="flex  gap-4 w-full ">
-        {cards.map((card) => (
-          <AnalyticsCard card={card} />
-        ))}
-      </div>
-      <div className="h-[400px] w-1/2  flex items-end">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
+      {cards.map((card, index) => (
+        <AnalyticsCard key={index} card={card} />
+      ))}
+
+      <div className="col-span-1 md:col-span-2  w-1/2">
+        <h2 className="text-xl font-bold mb-2">Task Status Overview</h2>
         <TasksPieChart
           totalCount={tasks.length}
           taskData={[
             {
               status: "todo",
               taskCount: todoTasks,
-              fill: "red",
+              fill: "hsl(0, 100%, 50%)",
             },
             {
               status: "doing",
               taskCount: doingTasks,
-              fill: "blue",
+              fill: "hsl(240, 100%, 50%)",
             },
             {
               status: "done",
               taskCount: doneTasks,
-              fill: "green",
+              fill: "hsl(120, 100%, 50%)",
             },
           ]}
         />
-        <h2>TODO</h2>
+      </div>
+      <div className="col-span-1 md:col-span-2  w-1/2">
+        <h2 className="text-xl font-bold mb-2">Task Counts Over Time</h2>
+        <TaskBarChart data={overTimeExampleData} />
       </div>
     </div>
   );

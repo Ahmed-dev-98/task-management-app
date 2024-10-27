@@ -17,8 +17,8 @@ import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { CaretSortIcon, EyeNoneIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import TableActions from "@/shared/table/table-actions";
-import { ITask } from "../Tasks-list";
 import { ROUTES } from "@/app/router/routes";
+import { ITask } from "@/app/types/types";
 
 export const columns: ColumnDef<ITask>[] = [
   {
@@ -61,6 +61,48 @@ export const columns: ColumnDef<ITask>[] = [
     ),
     cell: ({ row }) => {
       return <div className="text-start ">{row.original.description}</div>;
+    },
+  },
+  {
+    accessorKey: "createdBy",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Owner" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-start ">{`${row.original.createdBy?.given_name} ${row.original.createdBy?.family_name}`}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "assignedTo",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Assigned employees" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-start relative flex justify-center  w-full">
+          {row.original.assignedTo && row.original.assignedTo.length > 0 ? (
+            row.original.assignedTo.map((emp, index) => (
+              <div
+                key={emp.id}
+                style={{
+                  left: `${index * 20}px`,
+                  zIndex: `{index}`,
+                }}
+                className="w-8 h-8 rounded-full text-white bg-[#294664] border border-black absolute flex justify-center items-center"
+              >
+                <p
+                  className="text-xs font-medium cursor-default"
+                  title={`${emp.given_name} ${emp.family_name}`}
+                >{`${emp.given_name.charAt(0)}${emp.family_name.charAt(0)}`}</p>
+              </div>
+            ))
+          ) : (
+            <p className="italic text-gray-400">- No assigned employees -</p>
+          )}{" "}
+        </div>
+      );
     },
   },
   {
@@ -129,7 +171,13 @@ export const columns: ColumnDef<ITask>[] = [
       <DataTableColumnHeader column={column} title="Actions" />
     ),
     cell: ({ row }) => {
-      return <TableActions navigator={ROUTES.EDIT_TASK} task={row.original} />;
+      return (
+        <TableActions
+          module="tasks"
+          navigator={ROUTES.EDIT_TASK}
+          objectData={row.original}
+        />
+      );
     },
   },
 ];

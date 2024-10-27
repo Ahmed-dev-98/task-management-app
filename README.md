@@ -40,19 +40,19 @@ This project consists of:
    - Add the following variables to configure the integration with Kinde and Firebase services:
 
    **Kinde Configuration**
-   VITE_KINDE_CLIENT_ID=c5709494d0174c8abf5cfa18ccc82072
-   VITE_KINDE_DOMAIN=https://ahmedhassanmohamedahmad.kinde.com
-   VITE_KINDE_REDIRECT_URL=http://localhost:5173/dashboard
-   VITE_KINDE_LOGOUT_URL=http://localhost:5173
+   -VITE_KINDE_CLIENT_ID=c5709494d0174c8abf5cfa18ccc82072
+   -VITE_KINDE_DOMAIN=https://ahmedhassanmohamedahmad.kinde.com
+   -VITE_KINDE_REDIRECT_URL=http://localhost:5173/dashboard
+   -VITE_KINDE_LOGOUT_URL=http://localhost:5173
 
    **Firebase Configuration**
-   VITE_API_KEY=AIzaSyAA3OeYa0YDdNYdnSabs7BUQdEPpIc45IA
-   VITE_AUTH_DOMAIN=task-management-7913d.firebaseapp.com
-   VITE_PROJECT_ID=task-management-7913d
-   VITE_STORAGE_BUCKET=task-management-7913d.appspot.com
-   VITE_MESSAGING_SENDER_ID=945678658013
-   VITE_APP_ID=1:945678658013:web:a51b24b002f802b68fee34
-   VITE_MEASUREMENT_ID=G-JBZM1Z0W3K
+   -VITE_API_KEY=AIzaSyAA3OeYa0YDdNYdnSabs7BUQdEPpIc45IA
+   -VITE_AUTH_DOMAIN=task-management-7913d.firebaseapp.com
+   -VITE_PROJECT_ID=task-management-7913d
+   -VITE_STORAGE_BUCKET=task-management-7913d.appspot.com
+   -VITE_MESSAGING_SENDER_ID=945678658013
+   -VITE_APP_ID=1:945678658013:web:a51b24b002f802b68fee34
+   -VITE_MEASUREMENT_ID=G-JBZM1Z0W3K
 
 - This app is configured to run on port 5173 as required by Kinde for proper authentication handling. Changing this port will affect the integration.
 - finally run npm run dev

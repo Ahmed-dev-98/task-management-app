@@ -5,11 +5,11 @@ import { IEmployee, ITask } from "@/app/types/types"
 
 
 const initialState: IEmployee[] = [{
-    email: 'john.doe@example.com',
-    family_name: 'Doe',
-    given_name: 'John',
+    email: 'ahmed.h.mohamd98@gmail.com',
+    family_name: 'Hassan',
+    given_name: 'Ahmed',
     id: '1',
-    picture: 'https://randomuser.me/api/portraits/men/1.jpg',
+    picture: 'https://firebasestorage.googleapis.com/v0/b/task-management-7913d.appspot.com/o/images%2F457669478_2891606177654566_7117051287572455641_n.jpg?alt=media&token=55e15ee7-6e1d-496b-b07c-117d7d556bdf',
     tasks: [
     ]
 },

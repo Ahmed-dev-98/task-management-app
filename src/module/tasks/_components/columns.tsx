@@ -1,11 +1,6 @@
 import { Column, ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import {
-  FcLowPriority,
-  FcMediumPriority,
-  FcHighPriority,
-} from "react-icons/fc";
-import { FiClipboard, FiLoader, FiCheckCircle } from "react-icons/fi";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +14,8 @@ import { cn } from "@/lib/utils";
 import TableActions from "@/shared/table/table-actions";
 import { ROUTES } from "@/app/router/routes";
 import { ITask } from "@/app/types/types";
+import Status from "@/shared/cards/Status";
+import Priority from "@/shared/cards/Priority";
 
 export const columns: ColumnDef<ITask>[] = [
   {
@@ -117,20 +114,7 @@ export const columns: ColumnDef<ITask>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-start flex justify-center items-center gap-2 ">
-          <span
-            className={`flex items-center  px-2 py-1 rounded-full font-semibold text-xs min-w-[5rem] gap-4 ${
-              row.original?.priority === "high"
-                ? "bg-red-100 text-red-600"
-                : row.original?.priority === "medium"
-                ? "bg-yellow-100 text-yellow-600"
-                : "bg-green-100 text-green-600"
-            }`}
-          >
-            {row.original?.priority === "high" && <FcHighPriority />}
-            {row.original?.priority === "medium" && <FcMediumPriority />}
-            {row.original?.priority === "low" && <FcLowPriority />}
-            {row.original?.priority}
-          </span>
+          <Priority priority={row.original?.priority} />
         </div>
       );
     },
@@ -147,20 +131,7 @@ export const columns: ColumnDef<ITask>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-start flex justify-center items-center gap-2">
-          <span
-            className={`flex items-center gap-1 px-2 py-1 rounded-full font-semibold text-xs ${
-              row.original?.state === "todo"
-                ? "bg-blue-100 text-blue-600"
-                : row.original?.state === "doing"
-                ? "bg-purple-100 text-purple-600"
-                : "bg-green-100 text-green-600"
-            }`}
-          >
-            {row.original?.state === "todo" && <FiClipboard />}
-            {row.original?.state === "doing" && <FiLoader />}
-            {row.original?.state === "done" && <FiCheckCircle />}
-            {row.original?.state}
-          </span>
+          <Status state={row.original?.state} />
         </div>
       );
     },

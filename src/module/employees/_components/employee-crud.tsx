@@ -25,6 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ROUTES } from "@/app/router/routes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IEmployee } from "@/app/types/types";
+import { updateUser } from "@/store/slices/auth.slice";
 
 const EmployeeManager = () => {
   const [selectedImg, setSelectedImg] = useState("");
@@ -73,6 +74,8 @@ const EmployeeManager = () => {
   }, [id]);
 
   const onSubmit = (data: any) => {
+    console.log(data);
+
     const selectedTaskIds = selectedTasks.map((task) => task.id);
     const updatedTasks = tasks.filter((task) =>
       selectedTaskIds.includes(task.id)
@@ -94,6 +97,7 @@ const EmployeeManager = () => {
       });
 
       dispatch(updateEmployeeAction(data));
+      dispatch(updateUser(data));
     }
 
     navigate(ROUTES.EMPLOYEES);

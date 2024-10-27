@@ -131,11 +131,12 @@ const KanbanBoard = () => {
             <Droppable droppableId={column.id} key={column.id}>
               {(provided) => (
                 <div
+                  className="rounded-sm"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                   style={{
-                    margin: "0 8px",
-                    padding: "8px",
+                    margin: "0 4px",
+                    padding: "8px ",
                     width: 200,
                     flexGrow: 1,
                     height: "100%",
@@ -143,7 +144,15 @@ const KanbanBoard = () => {
                     backgroundColor: "#eee",
                   }}
                 >
-                  <h3 className="w-full bg-[#294664] text-white  text-center p-2 rounded-m font-medium">
+                  <h3
+                    className={` ${
+                      column.title === "Done"
+                        ? "bg-green-500"
+                        : column.title === "Doing"
+                        ? "bg-blue-500"
+                        : "bg-red-500"
+                    } w-full bg-[#294664] text-white  text-center p-2 rounded-sm font-medium`}
+                  >
                     {column.title}
                   </h3>
                   {columnTasks.map((task: ITask, index: number) => (

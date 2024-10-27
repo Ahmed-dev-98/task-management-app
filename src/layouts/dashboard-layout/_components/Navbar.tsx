@@ -23,13 +23,13 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-red-400 flex justify-center items-center font-bold text-white text-sm">
+        <div className="w-10 h-10 rounded-full capitalize  flex justify-center items-center font-medium text-black border  text-sm ">
           {user?.given_name?.charAt(0).toUpperCase()}
           {user?.family_name?.charAt(0).toUpperCase()}
         </div>
         <div className="flex flex-col text-right">
           <p className="font-semibold text-sm text-[#294664]">
-            {`user`?.given_name}
+            {user?.given_name}
           </p>
           <p className="text-xs text-gray-600">
             {isManager?.isGranted ? "Manager" : "Employee"}

@@ -73,7 +73,7 @@ const KanbanBoard = () => {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      return; 
+      return;
     }
 
     const sourceColumn = data.columns[source.droppableId];
@@ -120,7 +120,7 @@ const KanbanBoard = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div style={{ display: "flex", height: "100%" }}>
+      <div style={{ display: "flex", height: "100%", width: "100%" }}>
         {data.columnOrder.map((columnId) => {
           const column = data.columns[columnId];
           const columnTasks = column.taskIds.map(
@@ -154,6 +154,7 @@ const KanbanBoard = () => {
                     >
                       {(provided) => (
                         <div
+                          className="my-2"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}

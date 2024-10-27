@@ -51,7 +51,7 @@ const DashboardLayout = () => {
       <Sidebar />
       <div className="w-full  bg-[#f9fafc] flex flex-col">
         <Navbar />
-        <div className="w-full h-[calc(100%-200px)]">
+        <div className="w-full h-[calc(100%-80px)]">
           <ModuleContainer>
             <Outlet />
           </ModuleContainer>

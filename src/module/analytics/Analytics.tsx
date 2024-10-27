@@ -26,7 +26,7 @@ const Analytics = () => {
         number: 12,
         description: "from last month",
       },
-      icon: <Users2 />,
+      icon: <Users2 size={20} />,
     },
     {
       count: tasks?.length,
@@ -35,7 +35,7 @@ const Analytics = () => {
         number: -13,
         description: "from last month",
       },
-      icon: <ClipboardList />,
+      icon: <ClipboardList size={20} />,
     },
     {
       count: doneTasks,
@@ -44,7 +44,7 @@ const Analytics = () => {
         number: 33,
         description: "from last month",
       },
-      icon: <BookCheck />,
+      icon: <BookCheck size={20} />,
     },
     {
       count: doingTasks,
@@ -53,7 +53,7 @@ const Analytics = () => {
         number: 43,
         description: "from last month",
       },
-      icon: <Contact />,
+      icon: <Contact size={20} />,
     },
     {
       count: todoTasks,
@@ -62,7 +62,7 @@ const Analytics = () => {
         number: -13,
         description: "from last month",
       },
-      icon: <StickyNote />,
+      icon: <StickyNote size={20} />,
     },
   ];
   useEffect(() => {

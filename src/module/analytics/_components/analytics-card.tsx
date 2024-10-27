@@ -16,22 +16,22 @@ const AnalyticsCard = ({
   return (
     <div className="h-[140px] flex-1 flex flex-col justify-between gap-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-gray-800">{card.title}</h2>
-        <div className="text-blue-500 text-3xl">{card.icon}</div>
+        <h2 className="text-sm font-semibold text-gray-800">{card.title}</h2>
+        <div className="text-blue-500">{card.icon}</div>
       </div>
 
-      <div className="text-start text-4xl font-bold text-gray-900">
+      <div className="text-start text-lg font-bold text-gray-900">
         {card.count.toLocaleString()}
       </div>
 
-      <div className="text-start text-sm text-green-500 font-medium flex items-center gap-1">
+      <div className="text-start text-xs text-green-500 font-medium flex items-center gap-1">
         {card.growth.number >= 0 ? (
           <span className="text-green-500">
-            <TrendingUp />
+            <TrendingUp size={15} />
           </span>
         ) : (
           <span className="text-red-500">
-            <TrendingDown />
+            <TrendingDown size={15} />
           </span>
         )}
         <p

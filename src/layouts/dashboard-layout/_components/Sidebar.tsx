@@ -1,11 +1,16 @@
 import { ROUTES } from "@/app/router/routes";
 import { Button } from "@/components/ui/button";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { closeSidebar, selectSidebar } from "@/store/slices/sidebar.slice";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import { ArrowLeft, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const { logout, getPermission } = useKindeAuth();
   const location = useLocation();
+  const isOpen = useAppSelector(selectSidebar);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isManager = getPermission && getPermission("is-manager").isGranted;
   const navItems = [
@@ -35,48 +40,69 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="w-[25%] bg-[#eaeaea] h-full flex flex-col pt-5 gap-12">
-      <div className="flex justify-center items-center mx-auto  rounded-md w-[90%] h-[200px] ">
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/task-management-7913d.appspot.com/o/images%2Fpng-transparent-software-performance-testing-software-testing-functional-testing-computer-icons-system-testing-performance-angle-logo-performance.png?alt=media&token=f8909e08-6662-4a60-ab69-b9ac10f89149"
-          alt=""
-        />
+    <div
+      className={`${
+        isOpen.close ? "w-0" : "w-[25%]"
+      } bg-[#f5f5f5] h-full flex flex-col transition-all delay-300 duration-500 ease-in-out overflow-hidden`}
+    >
+      {/* Sidebar Header */}
+      <div
+        className={`${
+          isOpen.close ? "opacity-0" : ""
+        } transition-all duration-300 w-full flex items-center justify-between px-4 py-5 bg-[#eaeaea] shadow-sm`}
+      >
+        <h2 className="font-bold text-[#294664]">Task Manager</h2>
+        <Button
+          variant="outline"
+          className="p-2"
+          onClick={() => dispatch(closeSidebar())}
+        >
+          <ArrowLeft size={20} />
+        </Button>
       </div>
-      <div className="  h-[calc(100vh-200px)] flex flex-col justify-between">
-        <ul className="flex flex-col gap-8  justify-center items-center">
+
+      <div
+        className={`${
+          isOpen.close ? "opacity-0" : ""
+        } transition-all duration-300 flex flex-col justify-between h-[calc(100vh-100px)] px-4 py-6`}
+      >
+        <ul className="space-y-3">
           {navItems.map(
             (item, index) =>
               item.hasAccess && (
-                <Link
-                  key={index}
-                  className={`${
-                    location.pathname
-                      .split("dashboard/")[1]
-                      ?.includes(item.module)
-                      ? "bg-[#294664] text-white"
-                      : location.pathname === "/dashboard" &&
-                        item.name === "Analytics"
-                      ? "bg-[#294664] text-white"
-                      : "bg-transparent text-[#294664]"
-                  }  w-[90%] mx-auto border font-medium border-black flex justify-center items-center rounded-md py-3 capitalize hover:bg-[#294664] hover:text-white`}
-                  to={item.path}
-                >
-                  {item.name}
-                </Link>
+                <li key={index} className="w-full">
+                  <Link
+                    className={`${
+                      location.pathname
+                        .split("dashboard/")[1]
+                        ?.includes(item.module)
+                        ? "bg-[#294664] text-white"
+                        : location.pathname === "/dashboard" &&
+                          item.name === "Analytics"
+                        ? "bg-[#294664] text-white"
+                        : "bg-transparent text-[#294664]"
+                    }  w-[90%] mx-auto border font-medium border-black flex justify-center items-center rounded-md py-3 capitalize hover:bg-[#294664] hover:text-white`}
+                    to={item.path}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               )
           )}
         </ul>
-        <div className="flex flex-col gap-2">
+
+        <div className="space-y-4">
           <Button
             onClick={() => {
               logout();
               navigate(ROUTES.MAIN);
             }}
-            className="bg-[#294664] w-[90%] mx-auto flex justify-center items-center rounded-md py-3 capitalize"
+            className="bg-[#294664] w-full flex justify-center items-center text-white rounded-md py-3 capitalize transition hover:bg-[#1f3a56]"
           >
-            logout
-          </Button>{" "}
-          <footer className=" text-gray-800 py-1 text-center">
+            <LogOut size={18} className="mr-2" />
+            Logout
+          </Button>
+          <footer className="text-center text-gray-600">
             <p>
               &copy; {new Date().getFullYear()} Ahmed-dev. All rights reserved.
             </p>

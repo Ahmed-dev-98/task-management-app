@@ -24,15 +24,6 @@ const TasksList = () => {
   const [searchBy, setSearchBy] = useState("title");
   const { getPermission } = useKindeAuth();
   const [tasksData, setTasksData] = useState<ITask[]>([]);
-  useEffect(() => {
-    if (tasks && getPermission && !getPermission("is-manager").isGranted) {
-      setTasksData(tasks);
-      setIsLoading(false);
-    } else {
-      setTasksData(tasks);
-      setIsLoading(false);
-    }
-  }, [tasks]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -51,12 +42,21 @@ const TasksList = () => {
       columnFilters,
     },
   });
+  useEffect(() => {
+    if (tasks && getPermission && !getPermission("is-manager").isGranted) {
+      setTasksData(tasks);
+      setIsLoading(false);
+    } else {
+      setTasksData(tasks);
+      setIsLoading(false);
+    }
+  }, [tasks]);
 
   return (
     <TableContainer
       searchBy={searchBy}
       setSearchBy={setSearchBy}
-      addButtonText="Add Employee"
+      addButtonText="Add Task"
       columns={columns}
       table={table}
       isLoading={isLoading}

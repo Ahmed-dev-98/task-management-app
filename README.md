@@ -1,6 +1,6 @@
-# Project Name
+# Task management 
 
-[Brief description of the project, its purpose, and main features.]
+[application to manage employees and improve your progress]
 
 ## Table of Contents
 
